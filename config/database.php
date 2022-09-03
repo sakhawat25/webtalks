@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Str;
 
+$DATABASE_URL = parse_url('postgres://frdecclfptzofu:ec8407c3846e537221bc1039be46e049e33f587bd873aaa5a6182563e730dc41@ec2-34
+aws.com:5432/d76f2c0kn0d395');
+
 return [
 
     /*
@@ -15,7 +18,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,11 +69,11 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $DATABASE_URL['host'] ?? env('DB_HOST', '127.0.0.1'),
+            'port' => $DATABASE_URL['port'] ?? env('DB_PORT', '5432'),
+            'database' => ltrim($DATABASE_URL['path'], '/') ?? env('DB_DATABASE', 'forge'),
+            'username' => $DATABASE_URL['user'] ?? env('DB_USERNAME', 'forge'),
+            'password' => $DATABASE_URL['pass'] ?? env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
