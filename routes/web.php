@@ -1,12 +1,13 @@
 <?php
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController as Auth;
-use App\Http\Controllers\admin\ResetPasswordController as AdminResetPassword;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\admin\MessagesController;
 use App\Http\Controllers\PagesController as Pages;
 use App\Http\Controllers\PostsController as Posts;
-use App\Http\Controllers\admin\ForgotPasswordController as AdminForgotPassword;
 use App\Http\Controllers\CommentsController as Comments;
 use App\Http\Controllers\admin\AuthController as AdminAuth;
 use App\Http\Controllers\admin\PagesController as AdminPages;
@@ -16,7 +17,8 @@ use App\Http\Controllers\ResetPasswordController as ResetPassword;
 use App\Http\Controllers\admin\CommentsController as AdminComments;
 use App\Http\Controllers\ForgotPasswordController as ForgotPassword;
 use App\Http\Controllers\admin\CategoriesController as AdminCategories;
-use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\admin\ResetPasswordController as AdminResetPassword;
+use App\Http\Controllers\admin\ForgotPasswordController as AdminForgotPassword;
 
 /*
  * Frontend routes
@@ -91,3 +93,8 @@ Route::get('/', [Pages::class, 'home']);
 //     dd(bcrypt('12345'), bcrypt(time()));
 // });
 
+Route::get('/upload', fn() => view('upload'));
+Route::post('/upload', function(Request $request) {
+    $uploadedFileUrl = Cloudinary::upload($request->image->getRealPath())->getSecurePath();
+    dd($uploadedFileUrl);
+});
