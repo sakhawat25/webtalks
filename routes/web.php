@@ -104,10 +104,10 @@ Route::get('/upload', fn() => view('upload'));
 Route::post('/upload', function(Request $request) {
     $uploadedFileUrl = Cloudinary::upload($request->image->getRealPath(),
                                         null,
-                                        [
+                                        array(
                                             'folder' => 'images',
                                             'overwrite' => true,
                                             'resource_type' => 'image'
-                                        ])->getSecurePath();
+                                        ))->getSecurePath();
     dd($uploadedFileUrl);
 });
