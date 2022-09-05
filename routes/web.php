@@ -5,7 +5,7 @@
  Constants
  ================================
  */
-define('CLOUD_URL', 'https://res.cloudinary.com/df1kad4c2/image/upload/v1662357425');
+define('CLOUD_URL', 'https://res.cloudinary.com/df1kad4c2/image/upload/v1662357425/images/');
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -102,11 +102,5 @@ Route::get('/', [Pages::class, 'home']);
 
 Route::get('/upload', fn() => view('upload'));
 Route::post('/upload', function(Request $request) {
-    $uploadedFileUrl = Cloudinary::upload($request->image->getRealPath(),
-                                        [
-                                            'folder' => 'images',
-                                            'overwrite' => true,
-                                            'resource_type' => 'image'
-                                        ])->getSecurePath();
-    dd($uploadedFileUrl);
+    dd($request->image->getRealPath());
 });

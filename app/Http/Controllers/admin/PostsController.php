@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Filesystem\Filesystem;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class PostsController extends Controller
 {
@@ -40,11 +41,18 @@ class PostsController extends Controller
         // Create post slug
         $slug = Str::slug($request->title);
 
-        // Store image in storage
-        $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . $request->image->getClientOriginalName() : 'no_image.jpg';
+        // Set image name
+        $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . $request->image->getClientOriginalName() : 'no_image_dfqukd.jpg';
 
+        // Upload image on cloud
         if ($request->hasFile('image')) {
-            $request->image->move(public_path('images'), $imageName);
+            Cloudinary::upload($request->image->getRealPath(),
+                                        [
+                                            'folder'        => 'images',
+                                            'public_id'     => $imageName,
+                                            'overwrite'     => false,
+                                            'resource_type' => 'image'
+                                        ]);
         }        
 
         // Store data in database
@@ -97,11 +105,19 @@ class PostsController extends Controller
         $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . $request->image->getClientOriginalName() : $post->image;
 
         if ($request->hasFile('image')) {
-            // Delete old image
-            $this->deleteImage($post);
+            if ($post->image !== 'no_image_dfqukd.jpg') {
+                // Delete old image
+                Cloudinary::destroy($post->image);
+            }            
 
-            // Upload new image
-            $request->image->move(public_path('images'), $imageName);
+            // Upload new image on cloud
+            Cloudinary::upload($request->image->getRealPath(),
+                                        [
+                                            'folder'        => 'images',
+                                            'public_id'     => $imageName,
+                                            'overwrite'     => false,
+                                            'resource_type' => 'image'
+                                        ]);
         }        
 
         // Store data in database
@@ -163,10 +179,8 @@ class PostsController extends Controller
     // Delete post image from local directory if present
     public function deleteImage(Post $post) {
         // Delete post image if present
-        if ($post->image != 'no_image.jpg') {
-            $filePath = public_path('images\\' . $post->image);
-            $fileSystem = new Filesystem();            
-            $fileSystem->delete($filePath);
+        if ($post->image !== 'no_image_dfqukd.jpg') {
+            Cloudinary::destroy($post->image);
             return true;
         }
 
