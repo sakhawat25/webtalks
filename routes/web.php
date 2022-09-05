@@ -7,6 +7,7 @@
  */
 define('CLOUD_URL', 'https://res.cloudinary.com/df1kad4c2/image/upload/v1662357425');
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController as Auth;
 use App\Http\Controllers\ResetPasswordController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\admin\MessagesController;
 use App\Http\Controllers\PagesController as Pages;
 use App\Http\Controllers\PostsController as Posts;
 use App\Http\Controllers\CommentsController as Comments;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use App\Http\Controllers\admin\AuthController as AdminAuth;
 use App\Http\Controllers\admin\PagesController as AdminPages;
 use App\Http\Controllers\admin\PostsController as AdminPosts;
