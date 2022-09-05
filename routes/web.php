@@ -1,7 +1,12 @@
 <?php
 
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
-use Illuminate\Http\Request;
+/*
+ ================================
+ Constants
+ ================================
+ */
+define('CLOUD_URL', 'https://res.cloudinary.com/df1kad4c2/image/upload/v1662357425');
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController as Auth;
 use App\Http\Controllers\ResetPasswordController;
@@ -95,6 +100,12 @@ Route::get('/', [Pages::class, 'home']);
 
 Route::get('/upload', fn() => view('upload'));
 Route::post('/upload', function(Request $request) {
-    $uploadedFileUrl = Cloudinary::upload($request->image->getRealPath())->getSecurePath();
+    $uploadedFileUrl = Cloudinary::upload($request->image->getRealPath(),
+                                        null,
+                                        [
+                                            'folder' => 'images',
+                                            'overwrite' => true,
+                                            'resource_type' => 'image'
+                                        ])->getSecurePath();
     dd($uploadedFileUrl);
 });
