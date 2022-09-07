@@ -131,7 +131,7 @@ class PostsController extends Controller
         // Delete post
         $post->delete();
 
-        return redirect('posts')->with('message', 'Post has been deleted successfully!');
+        return redirect('admin/posts')->with('message', 'Post has been deleted successfully!');
     }
 
     // Update featured post
