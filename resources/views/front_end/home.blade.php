@@ -8,7 +8,7 @@
     <section class="section-padding pt-4">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+				<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     @if ($posts->count() > 0)
                         @foreach ($posts as $post)
                             <div class="mb-4 post-list border-bottom pb-4">
@@ -49,7 +49,7 @@
                     @endif                    
 				</div>
 
-				<div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
+				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 					<div class="sidebar sidebar-right">
 						<div class="sidebar-wrap mt-5 mt-lg-0">
 							<div class="sidebar-widget about mb-5 text-center p-3">
