@@ -49,7 +49,7 @@
 								<li class="nav-item text-center">
 									<div class="dropdown text-end my-4">
 										<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-											<img src="{{asset('images/' . auth()->user()->image)}}" alt="mdo" width="32" height="32" class="rounded-circle">
+											<img src="{{cloudinary()->getUrl('images/' . auth()->user()->image)}}" alt="mdo" width="32" height="32" class="rounded-circle">
 										</a>
 										<ul class="dropdown-menu text-small text-center" style="">
 											<li><a class="dropdown-item text-center">{{auth()->user()->name}}</a></li>

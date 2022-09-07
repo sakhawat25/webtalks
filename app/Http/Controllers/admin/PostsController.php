@@ -42,17 +42,11 @@ class PostsController extends Controller
         $slug = Str::slug($request->title);
 
         // Set image name
-        $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . $request->image->getClientOriginalName() : 'no_image_dfqukd.jpg';
+        $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME) : 'no_image';
 
         // Upload image on cloud
         if ($request->hasFile('image')) {
-            Cloudinary::upload($request->image->getRealPath(),
-                                        [
-                                            'folder'        => 'images',
-                                            'public_id'     => $imageName,
-                                            'overwrite'     => false,
-                                            'resource_type' => 'image'
-                                        ]);
+            $result = $request->image->storeOnCloudinaryAs('images', $imageName);
         }        
 
         // Store data in database
@@ -102,22 +96,16 @@ class PostsController extends Controller
         $slug = Str::slug($request->title);
 
         // Set new image name if updated
-        $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . $request->image->getClientOriginalName() : $post->image;
+        $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME) : $post->image;
 
         if ($request->hasFile('image')) {
-            if ($post->image !== 'no_image_dfqukd.jpg') {
+            if ($post->image !== 'no_image') {
                 // Delete old image
-                Cloudinary::destroy($post->image);
+                Cloudinary::destroy('images/' . $post->image);
             }            
 
             // Upload new image on cloud
-            Cloudinary::upload($request->image->getRealPath(),
-                                        [
-                                            'folder'        => 'images',
-                                            'public_id'     => $imageName,
-                                            'overwrite'     => false,
-                                            'resource_type' => 'image'
-                                        ]);
+            $result = $request->image->storeOnCloudinaryAs('images', $imageName);
         }        
 
         // Store data in database
@@ -143,7 +131,7 @@ class PostsController extends Controller
         // Delete post
         $post->delete();
 
-        return back()->with('message', 'Post has been deleted successfully!');
+        return redirect('posts')->with('message', 'Post has been deleted successfully!');
     }
 
     // Update featured post
@@ -179,8 +167,8 @@ class PostsController extends Controller
     // Delete post image from local directory if present
     public function deleteImage(Post $post) {
         // Delete post image if present
-        if ($post->image !== 'no_image_dfqukd.jpg') {
-            Cloudinary::destroy($post->image);
+        if ($post->image !== 'no_image') {
+            Cloudinary::destroy('images/' . $post->image);
             return true;
         }
 

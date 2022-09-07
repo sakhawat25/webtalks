@@ -12,7 +12,7 @@
                                 <div class="row no-gutters">
                                     <div class="col-md-5">
                                         <a class="post-thumb " href="{{url('posts/' . $post->id . '/single')}}">
-                                            <img src="{{asset('images')}}/{{$post->image}}" class="img-fluid w-100">
+                                            <img src="{{cloudinary()->getUrl('images/' . $post->image)}}" class="img-fluid w-100">
                                         </a>
                                     </div>
 

@@ -8,7 +8,7 @@
                         <div class="slider-item-content">
                             <div class="post-thumb mb-4">
                                 <a href="{{url('posts/' . $post->id . '/single')}}">
-                                    <img src="{{asset('images')}}/{{$post->image}}" class="img-fluid">
+                                    <img src="{{cloudinary()->getUrl('images/' . $post->image)}}" class="img-fluid">
                                 </a>
                             </div>
 

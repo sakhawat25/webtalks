@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
                 <div class="mb-5">
-                    <img src="{{CLOUD_URL . $post->image)}}" class="w-100">
+                    <img src="{{cloudinary()->getUrl('images/' . $post->image)}}" class="w-100" alt="{{$post->title}}">
                 </div>
                 <h4 class="card-title">Description</h4>
                 <div class="mb-5">

@@ -23,7 +23,7 @@
                                 <span class="text-uppercase font-sm letter-spacing-1">{{$post->created_at->format('M d, Y')}}</span>
                             </div>
                             <div class="post-featured-image mt-5">
-                                <img src="{{asset('images')}}/{{$post->image}}" class="img-fluid w-100" alt="featured-image">
+                                <img src="{{cloudinary()->getUrl('images/' . $post->image)}}" class="img-fluid w-100" alt="featured-image">
                             </div>
                         </div>
                         <!--Post Header End-->

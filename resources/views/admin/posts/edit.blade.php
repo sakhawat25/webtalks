@@ -76,7 +76,7 @@
                 @enderror
 
                 <div class="w-25 mt-3">
-                    <img src="{{CLOUD_URL . $post->image)}}" class="w-100" alt="no image" srcset="">
+                    <img src="{{cloudinary()->getUrl('images/' . $post->image)}}" class="w-100" alt="no image" srcset="">
                 </div>                
             </div>
             <button type="submit" class="btn btn-block btn-grey">Update</button>

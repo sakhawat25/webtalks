@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AuthController extends Controller
 {
@@ -36,11 +37,11 @@ class AuthController extends Controller
             'image'                 => 'mimes:jpg,jpeg,png'
         ]);
 
-        // Store image in storage
-        $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . $request->image->getClientOriginalName() : 'avatar.jpg';
+        // Store image on cloud
+        $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME) : 'avatar';
 
         if ($request->hasFile('image')) {
-            $request->image->move(public_path('images'), $imageName);
+            $result = $request->image->storeOnCloudinaryAs('images', $imageName);
         }  
 
         // Generate verification code
@@ -125,19 +126,17 @@ class AuthController extends Controller
        ]);
 
        // Set new image name if updated
-       $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . $request->image->getClientOriginalName() : auth()->user()->image;
+       $imageName = $request->hasFile('image') ? date('d_m_y_') . time() . '_' . pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME) : auth()->user()->image;
 
        // check if file has been uploaded
        if ($request->hasFile('image')) {
-            if (auth()->user()->image !== 'avatar.jpg') {
-                // delete old image and upload new image
-                $filePath = public_path('images\\' . auth()->user()->image);
-                $fileSystem = new Filesystem();            
-                $fileSystem->delete($filePath);
+            if (auth()->user()->image !== 'avatar') {
+                // delete old image
+                Cloudinary::destroy('images/' . auth()->user()->image);
             }
 
-            // Upload new image
-            $request->image->move(public_path('images'), $imageName);
+            // Upload new image on cloud
+            $result = $request->image->storeOnCloudinaryAs('images', $imageName);
        }
 
        // Update record
@@ -151,14 +150,12 @@ class AuthController extends Controller
 
     // Delete profile picture
     public function delete(Request $request) {
-        if (auth()->user()->image !== 'avatar.jpg') {
+        if (auth()->user()->image !== 'avatar') {
             // Delete picture
-            $filePath = public_path('images\\' . auth()->user()->image);
-            $fileSystem = new Filesystem();            
-            $fileSystem->delete($filePath);
+            Cloudinary::destroy('images/' . auth()->user()->image);
 
             // Set default picture
-            auth()->user()->update(['image' => 'avatar.jpg']);
+            auth()->user()->update(['image' => 'avatar']);
         }
 
         return asset('images/' . auth()->user()->image);

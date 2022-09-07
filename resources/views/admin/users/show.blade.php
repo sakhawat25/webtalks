@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <div class="mb-5">
-                    <img src="{{asset('images/' . $user->image)}}" style="width: 200px; height: 200px">
+                    <img src="{{cloudinary()->getUrl('images/' . $user->image)}}" style="width: 200px; height: 200px">
                 </div>
 
                 <table class="table table-striped table-hover">

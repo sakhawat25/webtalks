@@ -75,8 +75,8 @@
                             <div class="row">
                                 <div class="col-6 offset-3">
                                     <div class="w-100 text-white">
-                                        <img class="w-100 mx-auto border border-light shadow profile-picture rounded" src="{{asset('images/' . auth()->user()->image)}}" alt="Title">
-                                        @if (auth()->user()->image !== 'avatar.jpg')
+                                        <img class="w-100 mx-auto border border-light shadow profile-picture rounded" src="{{cloudinary()->getUrl('images/' . auth()->user()->image)}}" alt="Title">
+                                        @if (auth()->user()->image !== 'avatar')
                                             <div class="image-overlay bg-light position-absolute w-100 h-100 rounded d-flex flex-column justify-content-center">
                                                 <button id="delete-picture-btn" class="btn btn-primary">Delete</button>
                                             </div>
@@ -123,7 +123,7 @@
                         </div>
                         <div class="row mb-4">
                             <div class="col-6 offset-3">
-                                <img src="{{asset('images/' . auth()->user()->image)}}" alt="profile image" class="w-100 border border-light shadow profile-picture rounded">
+                                <img src="{{cloudinary()->getUrl('images/' . auth()->user()->image)}}" alt="profile image" class="w-100 border border-light shadow profile-picture rounded">
                             </div>
                         </div>
                         <div class="row">
