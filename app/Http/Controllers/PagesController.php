@@ -13,7 +13,7 @@ class PagesController extends Controller
 	// Show home page
 	public function home()
 	{
-		$data['posts'] = Post::latest()->paginate(10);
+		$data['posts'] = Post::latest()->paginate(5);
 		$data['featuredPosts'] = Post::where('featured', 1)->latest()->get();
 		$data['categories'] = Category::latest()->get();
 		return view('front_end.home', $data);
