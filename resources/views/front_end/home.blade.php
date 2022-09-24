@@ -35,13 +35,14 @@
                                                 </ul>
                                             </div>
                                             <div class="post-content">
-                                                {!! Str::substr($post->description, 0, 200) . '...' !!}
+                                                {{ Str::limit(strip_tags($post->description), 200, '...') }}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+
                         {{$posts->links('paginationlinks')}}
                     
                     @else
