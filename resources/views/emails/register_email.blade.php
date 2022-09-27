@@ -70,7 +70,7 @@
     <h1 class="title">Thanks for signing up, {{$emailData['user']}}!</h1>
     <p>You have successfully registered your account on Webtalks. Please verify your email address by clicking on the button below.<br><span style="color: green;"><b>Thank you!</b></span></p>
     <div style="text-align: center; margin-top: 50px">
-    <a href="{{route('verify_email', ['code' => $emailData['verification_code']])}}" class="button">Verify Email Now</a>
+    <a href="{{ route('verify_email', urlencode($emailData['verification_code'])) }}" class="button">Verify Email Now</a>
   </div>
   </div>
 </body>

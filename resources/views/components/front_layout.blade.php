@@ -109,6 +109,14 @@
 			</div>
 		@endif
 
+		@if (session('info'))
+			<div class="container">
+				<div class="alert alert-danger mb-5 mt-3 rounded-0" role="alert" id="alert-box">
+						{{session('info')}}
+				</div>
+			</div>
+		@endif
+
 		{{$slot}}
 
         <section class="footer-2 section-padding gray-bg pb-5">

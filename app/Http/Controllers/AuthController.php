@@ -63,10 +63,10 @@ class AuthController extends Controller
             $user->password = bcrypt($request->password);
             $user->save();
 
-            return redirect()->back()->with('message', 'Registration has been successful, please check your inbox to verify you email.');
+            return redirect()->back()->with('info', 'Registration has been successful, please check your inbox to verify you email.');
 
         } catch (Throwable $th) {
-            return back()->with('message', $th->getMessage());
+            return back()->with('info', $th->getMessage());
         }        
     }
 
@@ -86,12 +86,12 @@ class AuthController extends Controller
                 return redirect('/')->with('message', 'You have been signed in successfully.');
             }
             else {
-                return back()->with('message', 'Wrong login credientials!')->withInput();
+                return back()->with('info', 'Wrong login credientials!')->withInput();
             }
         }
         else {
             // show message for email verification
-            return back()->with('message', 'Please verify your email to log in to your account.');
+            return back()->with('info', 'Please verify your email to log in to your account.');
         }
     }
 
@@ -114,7 +114,7 @@ class AuthController extends Controller
         }
         else {
             // Verification failed
-            return redirect('register')->with('message', 'There was some problem while verifying your email, please try later.');
+            return redirect('register')->with('info', 'There was some problem while verifying your email, please try later.');
         }
     }
 
