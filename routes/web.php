@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController as Auth;
-use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\admin\MessagesController;
 use App\Http\Controllers\PagesController as Pages;
 use App\Http\Controllers\PostsController as Posts;

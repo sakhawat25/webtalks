@@ -1,0 +1,2 @@
+INSERT INTO users (name, email, image, verification_code, is_verified, email_verified_at, password, is_admin, remember_token) VALUES
+('Sakhawat Hussain (Admin)', 'admin@webtalks.com', 'avatar.jpg', '$2y$10$/R9VlBvKvVTHf2k0jHRIQuOkN1t1cMVWvfeBpHWbtM4/LIta9Sl16', 1, NOW(), '$2y$10$p4wCPQPREXGGPQvCAJ7woOp.s6rNSoFTX0POcH2YODElqu89gPe2u', 1, '9sNsqWkGoH0CLEGYqU8rCglPHkgpRTtGXLsvkepO8xk8XAEwzpPjglo6GrJY');
